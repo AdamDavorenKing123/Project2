@@ -1,45 +1,5 @@
 ﻿///////////////////Double Linked Lists////////////////////////
-//createDoubleLinkedList() : Creates a new empty double linked list, consisting
-//only of head and tail
-//Pre : None
-//Post : Empty double linked list is created.
-//deleteDoubleLinkedList() : Deletes a list(including all its elements).
-//Pre : valid double linked list exists.
-//Post : The entire list is deleted.
-//getData() : Returns the data associated with current node.
-//Pre : valid double linked list exists.
-//Post : data of current node is returned
-//gotoNextNode() : Sets current node to the successor of current.
-//Pre : valid double linked lists exists.
-//Post : if current node is other than tail, current node is set to successor of
-//current node.Otherwise, list remains unchanged.
-//Page 1 of 6
-//CE4703 Assignment 2
-//gotoPreviousNode() : Sets current node to the predeccessor of current.
-//Pre : valid double linked lists exists.
-//Post : if current node is other than head, current node is set set to predeccessor of current node.Otherwise, list remains unchanged.
-//gotoHead() : Sets current node to head.
-//Pre : valid double linked lists exists.
-//Post : current node is set to head
-//gotoTail() : Sets current node to tail.
-//Pre : valid double linked lists exists
-//Post : current node is set to tail
-//insertAfter(newdata) : Creates a new node, associates newdata with it and
-//inserts it after the current node.
-//Pre : valid double linked lists exists and newdata is valid data.
-//Post : If current node is not tail, new node is inserted after current node.
-//Otherwise list remains unchanged and an error is returned.
-//insertBefore(newdata) : Creates a new node, associates newdata with it and
-//inserts it before the current node.
-//Pre : valid double linked lists exists and newdata is valid data.
-//Post : If current node is not head, new node is inserted before current node.
-//Otherwise list remains unchanged and an error is returned ⇒
-//deleteCurrent() : Deletes the current node from list.
-//Pre : valid double linked list exists.
-//Post : If current node is other than head or tail, the current node is removed
-//from list.Otherwise, an error is returned.
-//Define suitable data type(s) for a double linked list and implement the outlined
-//operations.
+
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -52,26 +12,35 @@ typedef struct Node {
 typedef struct {
     Node* head;
     Node* tail;
+    Node* current;
 } DoubleLinkedList;
 
-void createDoubleLinkedList(DoubleLinkedList** list) {
+static void createDoubleLinkedList(DoubleLinkedList** list) {
     // allocate memory using malloc
     *list = malloc(sizeof(DoubleLinkedList));
+    if (*list == NULL) {
+        // Handle memory allocation failure
+        printf("Error: Memory allocation failed.\n");
+        return;
+    }
+
     // allocate memory for head and tail using malloc
     (*list)->head = malloc(sizeof(Node));
+    if ((*list)->head == NULL) {
+        // Handle memory allocation failure
+        printf("Error: Memory allocation failed.\n");
+        free(*list); // Don't forget to free the previously allocated memory
+        return;
+    }
+
     (*list)->tail = malloc(sizeof(Node));
-
-    // initialize head -> prev to NULL & next to tail
-    (*list)->head->prev = NULL;
-    (*list)->head->next = (*list)->tail;
-    // set data field to dummy value
-    (*list)->head->data = 0; 
-
-    // initialize tail -> prev to head & next to NULL
-    (*list)->tail->prev = (*list)->head;
-    (*list)->tail->next = NULL;
-    // set data field to dummy value
-    (*list)->tail->data = 0; 
+    if ((*list)->tail == NULL) {
+        // Handle memory allocation failure
+        printf("Error: Memory allocation failed.\n");
+        free((*list)->head); // Don't forget to free the previously allocated memory
+        free(*list); // Don't forget to free the previously allocated memory
+        return;
+    }
 }
 //IMPLEMENTATION IN MAIN
 //int main() {
@@ -115,4 +84,109 @@ void deleteDoubleLinkedList(DoubleLinkedList** list) {
 //    return 0;
 //}
 
+int getData(DoubleLinkedList* list) {
+    if (list == NULL || list->current == NULL) {
+        printf("Error: List is empty or does not exist.\n");
+        return -1; // Return an error value
+    }
+    return list->current->data;
+}
 
+void gotoNextNode(DoubleLinkedList* list) {
+    if (list == NULL || list->current == NULL) {
+        printf("Error: List is empty or does not exist.\n");
+        return;
+    }
+    if (list->current != list->tail) {
+        list->current = list->current->next;
+    }
+}
+
+void gotoPreviousNode(DoubleLinkedList* list) {
+    if (list == NULL || list->current == NULL) {
+        printf("Error: List is empty or does not exist.\n");
+        return;
+    }
+    if (list->current != list->head) {
+        list->current = list->current->prev;
+    }
+}
+
+void gotoHead(DoubleLinkedList* list) {
+    if (list == NULL) {
+        printf("Error: List does not exist.\n");
+        return;
+    }
+    list->current = list->head;
+}
+
+void gotoTail(DoubleLinkedList* list) {
+    if (list == NULL) {
+        printf("Error: List does not exist.\n");
+        return;
+    }
+    list->current = list->tail;
+}
+
+void insertAfter(DoubleLinkedList* list, int newdata) {
+    if (list == NULL || list->current == NULL) {
+        printf("Error: List is empty or does not exist.\n");
+        return;
+    }
+    if (list->current == list->tail) {
+        printf("Error: Cannot insert after tail node.\n");
+        return;
+    }
+
+    Node* new_node = malloc(sizeof(Node));
+    if (new_node == NULL) {
+        printf("Error: Memory allocation failed.\n");
+        return;
+    }
+
+    new_node->data = newdata;
+    new_node->prev = list->current;
+    new_node->next = list->current->next;
+    list->current->next->prev = new_node;
+    list->current->next = new_node;
+}
+
+void insertBefore(DoubleLinkedList* list, int newdata) {
+    if (list == NULL || list->current == NULL) {
+        printf("Error: List is empty or does not exist.\n");
+        return;
+    }
+    if (list->current == list->head) {
+        printf("Error: Cannot insert before head node.\n");
+        return;
+    }
+
+    Node* new_node = malloc(sizeof(Node));
+    if (new_node == NULL) {
+        printf("Error: Memory allocation failed.\n");
+        return;
+    }
+
+    new_node->data = newdata;
+    new_node->prev = list->current->prev;
+    new_node->next = list->current;
+    list->current->prev->next = new_node;
+    list->current->prev = new_node;
+}
+
+void deleteCurrent(DoubleLinkedList* list) {
+    if (list == NULL || list->current == NULL) {
+        printf("Error: List is empty or does not exist.\n");
+        return;
+    }
+    if (list->current == list->head || list->current == list->tail) {
+        printf("Error: Cannot delete head or tail node.\n");
+        return;
+    }
+
+    Node* temp = list->current;
+    list->current->prev->next = list->current->next;
+    list->current->next->prev = list->current->prev;
+    list->current = list->current->next;
+    free(temp);
+}
