@@ -190,3 +190,4 @@ void deleteCurrent(DoubleLinkedList* list) {
     list->current = list->current->next;
     free(temp);
 }
+
