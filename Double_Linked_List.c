@@ -20,7 +20,7 @@ static void createDoubleLinkedList(DoubleLinkedList** list) {
     *list = malloc(sizeof(DoubleLinkedList));
     if (*list == NULL) {
         // Handle memory allocation failure
-        printf("Error: Memory allocation failed.\n");
+        printf("Error: Memory allocation failed\n");
         return;
     }
 
