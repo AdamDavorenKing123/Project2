@@ -1,5 +1,5 @@
 ﻿///////////////////Double Linked Lists////////////////////////
-
+////Test//////
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -190,4 +190,3 @@ void deleteCurrent(DoubleLinkedList* list) {
     list->current = list->current->next;
     free(temp);
 }
-
