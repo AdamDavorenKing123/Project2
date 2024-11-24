@@ -15,11 +15,28 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Menu.c">
+    <ClCompile Include="main.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Double_Linked_List.c">
+    <ClCompile Include="doubleLinkedList.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="menuFunctions.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dataTypeOrderedIntSet.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="dataTypeOrderedIntSet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="doubleLinkedList.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="menuFunctions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
