@@ -1,19 +1,16 @@
-﻿///////////////////Double Linked Lists////////////////////////
-////Test//////
-#include <stdlib.h>
-#include <stdio.h>
+﻿/**
+* @file doubleLinkedList.c
+* @brief This file contains the implementation of a double linked list, with its related functions
+*
+* Such operations include managing a doubly linked list by creating, deleting, and traversing nodes, and inserting or deleting nodes at specific positions relative to the current node.
+* 
+* @authors Adam Davoren King, Andrew Reel, Charlie Brady, Ciaran Knowles, Joey Clancy, Ruairi Seery
+* @version 1.0
+*/
 
-typedef struct Node {
-    int data;
-    struct Node* prev;
-    struct Node* next;
-} Node;
-
-typedef struct {
-    Node* head;
-    Node* tail;
-    Node* current;
-} DoubleLinkedList;
+#include "doubleLinkedList.h"
+#include "dataTypeOrderedIntSet.h"
+#include "menuFunctions.h"
 
 static void createDoubleLinkedList(DoubleLinkedList** list) {
     // allocate memory using malloc
