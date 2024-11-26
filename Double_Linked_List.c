@@ -81,15 +81,16 @@ Dllerror deleteDoubleLinkedList(DoubleLinkedList* list) {
         // free current node, free
         // move to next node
         gotoHead(list);
-        while (list->current != (list)->tail) {
-            Node* next = list->current->next;
-            free(list->current);
-            gotoNextNode(list);
+        gotoNextNode(list);
+        while (deleteCurrent(list) == ok) {
+            deleteCurrent(list);
         }
         // free tail
         // free list
         free(list->tail);
+        free(list->head);
         free(list);
+        
         // set list ptr to NULL
         list = NULL;
     }
