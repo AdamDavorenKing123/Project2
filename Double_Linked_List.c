@@ -78,9 +78,9 @@ Dllerror deleteDoubleLinkedList(DoubleLinkedList* list) {
     // store next pointer in temporary variable next
 	// free current node, free
 	// move to next node
-    Node* current = (list)->head;
+    Node *current = (list)->head;
     while (current != (list)->tail) {
-        Node* next = current->next;
+        Node*next = current->next;
         free(current);
         current = next;
     }
@@ -130,6 +130,7 @@ Dllerror gotoPreviousNode(DoubleLinkedList* list) {
     if (list->current != list->head) {
         list->current = list->current->prev;
     }
+    return result;
 }
 
 Dllerror gotoHead(DoubleLinkedList* list) {
@@ -149,6 +150,7 @@ Dllerror gotoTail(DoubleLinkedList* list) {
         result = noMemory;
     }
     list->current = list->tail;
+    return result;
 }
 
 Dllerror insertAfter(DoubleLinkedList* list, int newdata) {
