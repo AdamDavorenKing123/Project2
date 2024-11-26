@@ -52,6 +52,7 @@ Dllerror  createDoubleLinkedList(DoubleLinkedList* list) {
                 list->tail->prev = list->head;// ensure list tail points prev to head
                 list->head->prev = NULL;// ensure list head prev points to null 
                 list->tail->next = NULL;// ensure list tail next points to null
+                list->current = list->head;// make the head the current node 
             }
         }
     }
@@ -73,23 +74,25 @@ Dllerror deleteDoubleLinkedList(DoubleLinkedList* list) {
         printf("Error: List is already deleted or does not exist.\n");
         result = noMemory;
     }
-    // delete all nodes in list
-    // itereate through list
-    // store next pointer in temporary variable next
-	// free current node, free
-	// move to next node
-    gotoHead(list);
-    while (list->current != (list)->tail) {
-        Node*next = list->current->next;
-        free(list->current);
-        gotoNextNode(list);
+    else {
+        // delete all nodes in list
+        // itereate through list
+        // store next pointer in temporary variable next
+        // free current node, free
+        // move to next node
+        gotoHead(list);
+        while (list->current != (list)->tail) {
+            Node* next = list->current->next;
+            free(list->current);
+            gotoNextNode(list);
+        }
+        // free tail
+        // free list
+        free(list->tail);
+        free(list);
+        // set list ptr to NULL
+        list = NULL;
     }
-    // free tail
-    // free list
-    free(list->tail);
-    free(list);
-    // set list ptr to NULL
-    list = NULL;
     return result;
 }
 //IMPLEMENTATION IN MAIN
@@ -106,7 +109,9 @@ int getData(DoubleLinkedList* list) {
         printf("Error: List is empty or does not exist.\n");
         return -1; // Return an error value
     }
-    return list->current->data;
+    else {
+        return list->current->data;
+    }
 }
 
 Dllerror gotoNextNode(DoubleLinkedList* list) {
@@ -115,8 +120,10 @@ Dllerror gotoNextNode(DoubleLinkedList* list) {
         printf("Error: List is empty or does not exist.\n");
         result= noMemory;
     }
-    if (list->current != list->tail) {
-        list->current = list->current->next;
+    else {
+        if (list->current != list->tail) {
+            list->current = list->current->next;
+        }
     }
     return result;
 }
@@ -127,8 +134,13 @@ Dllerror gotoPreviousNode(DoubleLinkedList* list) {
         printf("Error: List is empty or does not exist.\n");
         result = noMemory;
     }
-    if (list->current != list->head) {
-        list->current = list->current->prev;
+    else {
+        if (list->current == list->head) {
+            result = illegalNode;
+        }
+        else {
+            list->current = list->head;
+        }
     }
     return result;
 }
@@ -139,7 +151,9 @@ Dllerror gotoHead(DoubleLinkedList* list) {
         printf("Error: List does not exist.\n");
         result = noMemory;
     }
-    list->current = list->head;
+    else {
+        list->current = list->head;
+    }
     return result;
 }
 
@@ -149,7 +163,9 @@ Dllerror gotoTail(DoubleLinkedList* list) {
         printf("Error: List does not exist.\n");
         result = noMemory;
     }
-    list->current = list->tail;
+    else {
+        list->current = list->tail;
+    }
     return result;
 }
 
@@ -159,22 +175,28 @@ Dllerror insertAfter(DoubleLinkedList* list, int newdata) {
         printf("Error: List is empty or does not exist.\n");
         result = noMemory;
     }
-    if (list->current == list->tail) {
-        printf("Error: Cannot insert after tail node.\n");
-        result= illegalNode;
-    }
+    else {
+        if (list->current == list->tail) {
+            printf("Error: Cannot insert after tail node.\n");
+            result = illegalNode;
+        }
+        else {
 
-    Node* new_node = malloc(sizeof(Node));
-    if (new_node == NULL) {
-        printf("Error: Memory allocation failed.\n");
-        result = illegalNode;
-    }
+            Node* new_node = malloc(sizeof(Node));
+            if (new_node == NULL) {
+                printf("Error: Memory allocation failed.\n");
+                result = illegalNode;
+            }
+            else {
 
-    new_node->data = newdata;
-    new_node->prev = list->current;
-    new_node->next = list->current->next;
-    list->current->next->prev = new_node;
-    list->current->next = new_node;
+                new_node->data = newdata;
+                new_node->prev = list->current;
+                new_node->next = list->current->next;
+                list->current->next->prev = new_node;
+                list->current->next = new_node;
+            }
+        }
+    }
     return result;
 }
 
@@ -184,22 +206,27 @@ Dllerror insertBefore(DoubleLinkedList* list, int newdata) {
         printf("Error: List is empty or does not exist.\n");
         result = noMemory;
     }
-    if (list->current == list->head) {
-        printf("Error: Cannot insert before head node.\n");
-        result= noMemory;
-    }
+    else {
+        if (list->current == list->head) {
+            printf("Error: Cannot insert before head node.\n");
+            result = noMemory;
+        }
+        else {
 
-    Node* new_node = malloc(sizeof(Node));
-    if (new_node == NULL) {
-        printf("Error: Memory allocation failed.\n");
-        result= noMemory;
+            Node* new_node = malloc(sizeof(Node));
+            if (new_node == NULL) {
+                printf("Error: Memory allocation failed.\n");
+                result = noMemory;
+            }
+            else {
+                new_node->data = newdata;
+                new_node->prev = list->current->prev;
+                new_node->next = list->current;
+                list->current->prev->next = new_node;
+                list->current->prev = new_node;
+            }
+        }
     }
-
-    new_node->data = newdata;
-    new_node->prev = list->current->prev;
-    new_node->next = list->current;
-    list->current->prev->next = new_node;
-    list->current->prev = new_node;
     return result; 
 }
 
@@ -209,16 +236,19 @@ Dllerror deleteCurrent(DoubleLinkedList* list) {
         printf("Error: List is empty or does not exist.\n");
         result= noMemory;
     }
-    if (list->current == list->head || list->current == list->tail) {
-        printf("Error: Cannot delete head or tail node.\n");
-        result = illegalNode;
+    else {
+        if (list->current == list->head || list->current == list->tail) {
+            printf("Error: Cannot delete head or tail node.\n");
+            result = illegalNode;
+        }
+        else {
+            Node* temp = list->current;
+            list->current->prev->next = list->current->next;
+            list->current->next->prev = list->current->prev;
+            list->current = list->current->next;
+            free(temp);
+        }
     }
-
-    Node* temp = list->current;
-    list->current->prev->next = list->current->next;
-    list->current->next->prev = list->current->prev;
-    list->current = list->current->next;
-    free(temp);
     return result;
 }
 
