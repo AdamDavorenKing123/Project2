@@ -15,31 +15,32 @@ typedef struct {
     Node* current;
 } DoubleLinkedList;
 
-static void createDoubleLinkedList(DoubleLinkedList** list) {
+static void createDoubleLinkedList(DoubleLinkedList* list) {
     // allocate memory using malloc
-    *list = malloc(sizeof(DoubleLinkedList));
-    if (*list == NULL) {
+    list = malloc(sizeof(DoubleLinkedList));
+    if (list == NULL) {
         // Handle memory allocation failure
         printf("Error: Memory allocation failed.\n");
         return;
     }
+    else {
+        // allocate memory for head and tail using malloc
+        list->head = malloc(sizeof(Node));
+        if (list->head == NULL) {
+            // Handle memory allocation failure
+            printf("Error: Memory allocation failed.\n");
+            free(list); // Don't forget to free the previously allocated memory
+            return;
+        }
 
-    // allocate memory for head and tail using malloc
-    (*list)->head = malloc(sizeof(Node));
-    if ((*list)->head == NULL) {
-        // Handle memory allocation failure
-        printf("Error: Memory allocation failed.\n");
-        free(*list); // Don't forget to free the previously allocated memory
-        return;
-    }
-
-    (*list)->tail = malloc(sizeof(Node));
-    if ((*list)->tail == NULL) {
-        // Handle memory allocation failure
-        printf("Error: Memory allocation failed.\n");
-        free((*list)->head); // Don't forget to free the previously allocated memory
-        free(*list); // Don't forget to free the previously allocated memory
-        return;
+        list->tail = malloc(sizeof(Node));
+        if (list->tail == NULL) {
+            // Handle memory allocation failure
+            printf("Error: Memory allocation failed.\n");
+            free(list->head); // Don't forget to free the previously allocated memory
+            free(list); // Don't forget to free the previously allocated memory
+            return;
+        }
     }
 }
 //IMPLEMENTATION IN MAIN
@@ -50,10 +51,10 @@ static void createDoubleLinkedList(DoubleLinkedList** list) {
 //    return 0;
 //}
 
-void deleteDoubleLinkedList(DoubleLinkedList** list) {
+void deleteDoubleLinkedList(DoubleLinkedList* list) {
     // check if list is NULL
     // if true print error message
-    if (*list == NULL) {
+    if (list == NULL) {
         printf("Error: List is already deleted or does not exist.\n");
         return;
     }
@@ -62,18 +63,18 @@ void deleteDoubleLinkedList(DoubleLinkedList** list) {
     // store next pointer in temporary variable next
 	// free current node, free
 	// move to next node
-    Node* current = (*list)->head;
-    while (current != (*list)->tail) {
+    Node* current = (list)->head;
+    while (current != (list)->tail) {
         Node* next = current->next;
         free(current);
         current = next;
     }
     // free tail
     // free list
-    free((*list)->tail);
-    free(*list);
+    free(list->tail);
+    free(list);
     // set list ptr to NULL
-    *list = NULL;
+    list = NULL;
 }
 //IMPLEMENTATION IN MAIN
 //int main() {
