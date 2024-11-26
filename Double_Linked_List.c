@@ -2,6 +2,11 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+enum Dllerror {
+    ok,
+    illeagalNode,
+    noMemory,
+};
 
 typedef struct Node {
     int data;
