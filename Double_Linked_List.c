@@ -2,11 +2,11 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-enum Dllerror {
+typedef enum {
     ok,
-    illeagalNode,
-    noMemory,
-};
+    illegalNode,
+    noMemory
+}Dllerror;
 
 typedef struct Node {
     int data;
@@ -20,13 +20,14 @@ typedef struct {
     Node* current;
 } DoubleLinkedList;
 
-static void createDoubleLinkedList(DoubleLinkedList* list) {
+Dllerror  createDoubleLinkedList(DoubleLinkedList* list) {
     // allocate memory using malloc
+    Dllerror result = ok; 
     list = malloc(sizeof(DoubleLinkedList));
     if (list == NULL) {
         // Handle memory allocation failure
         printf("Error: Memory allocation failed.\n");
-        return;
+        result=noMemory;
     }
     else {
         // allocate memory for head and tail using malloc
@@ -35,7 +36,7 @@ static void createDoubleLinkedList(DoubleLinkedList* list) {
             // Handle memory allocation failure
             printf("Error: Memory allocation failed.\n");
             free(list); // Don't forget to free the previously allocated memory
-            return;
+            result= noMemory;
         }
         else {
             list->tail = malloc(sizeof(Node));
@@ -44,7 +45,7 @@ static void createDoubleLinkedList(DoubleLinkedList* list) {
                 printf("Error: Memory allocation failed.\n");
                 free(list->head); // Don't forget to free the previously allocated memory
                 free(list); // Don't forget to free the previously allocated memory
-                return;
+                result= noMemory;
             }
             else {
                 list->head->next = list->tail;// enure list head points next to list tail
@@ -54,6 +55,7 @@ static void createDoubleLinkedList(DoubleLinkedList* list) {
             }
         }
     }
+    return result;
 }
 //IMPLEMENTATION IN MAIN
 //int main() {
@@ -63,12 +65,13 @@ static void createDoubleLinkedList(DoubleLinkedList* list) {
 //    return 0;
 //}
 
-void deleteDoubleLinkedList(DoubleLinkedList* list) {
+Dllerror deleteDoubleLinkedList(DoubleLinkedList* list) {
     // check if list is NULL
     // if true print error message
+    Dllerror result = ok;
     if (list == NULL) {
         printf("Error: List is already deleted or does not exist.\n");
-        return;
+        result = noMemory;
     }
     // delete all nodes in list
     // itereate through list
@@ -87,6 +90,7 @@ void deleteDoubleLinkedList(DoubleLinkedList* list) {
     free(list);
     // set list ptr to NULL
     list = NULL;
+    return result;
 }
 //IMPLEMENTATION IN MAIN
 //int main() {
@@ -105,56 +109,63 @@ int getData(DoubleLinkedList* list) {
     return list->current->data;
 }
 
-void gotoNextNode(DoubleLinkedList* list) {
+Dllerror gotoNextNode(DoubleLinkedList* list) {
+    Dllerror result = ok;
     if (list == NULL || list->current == NULL) {
         printf("Error: List is empty or does not exist.\n");
-        return;
+        result= noMemory;
     }
     if (list->current != list->tail) {
         list->current = list->current->next;
     }
+    return result;
 }
 
-void gotoPreviousNode(DoubleLinkedList* list) {
+Dllerror gotoPreviousNode(DoubleLinkedList* list) {
+    Dllerror result = ok;
     if (list == NULL || list->current == NULL) {
         printf("Error: List is empty or does not exist.\n");
-        return;
+        result = noMemory;
     }
     if (list->current != list->head) {
         list->current = list->current->prev;
     }
 }
 
-void gotoHead(DoubleLinkedList* list) {
+Dllerror gotoHead(DoubleLinkedList* list) {
+    Dllerror result = ok;
     if (list == NULL) {
         printf("Error: List does not exist.\n");
-        return;
+        result = noMemory;
     }
     list->current = list->head;
+    return result;
 }
 
-void gotoTail(DoubleLinkedList* list) {
+Dllerror gotoTail(DoubleLinkedList* list) {
+    Dllerror result = ok;
     if (list == NULL) {
         printf("Error: List does not exist.\n");
-        return;
+        result = noMemory;
     }
     list->current = list->tail;
 }
 
-void insertAfter(DoubleLinkedList* list, int newdata) {
+Dllerror insertAfter(DoubleLinkedList* list, int newdata) {
+    Dllerror result = ok;
     if (list == NULL || list->current == NULL) {
         printf("Error: List is empty or does not exist.\n");
-        return;
+        result = noMemory;
     }
     if (list->current == list->tail) {
         printf("Error: Cannot insert after tail node.\n");
-        return;
+        result= illegalNode;
     }
 
     Node* new_node = malloc(sizeof(Node));
     if (new_node == NULL) {
         printf("Error: Memory allocation failed.\n");
-        return;
+        result = illegalNode;
     }
 
     new_node->data = newdata;
@@ -162,22 +173,24 @@ void insertAfter(DoubleLinkedList* list, int newdata) {
     new_node->next = list->current->next;
     list->current->next->prev = new_node;
     list->current->next = new_node;
+    return result;
 }
 
-void insertBefore(DoubleLinkedList* list, int newdata) {
+Dllerror insertBefore(DoubleLinkedList* list, int newdata) {
+    Dllerror result = ok;
     if (list == NULL || list->current == NULL) {
         printf("Error: List is empty or does not exist.\n");
-        return;
+        result = noMemory;
     }
     if (list->current == list->head) {
         printf("Error: Cannot insert before head node.\n");
-        return;
+        result= noMemory;
     }
 
     Node* new_node = malloc(sizeof(Node));
     if (new_node == NULL) {
         printf("Error: Memory allocation failed.\n");
-        return;
+        result= noMemory;
     }
 
     new_node->data = newdata;
@@ -185,16 +198,18 @@ void insertBefore(DoubleLinkedList* list, int newdata) {
     new_node->next = list->current;
     list->current->prev->next = new_node;
     list->current->prev = new_node;
+    return result; 
 }
 
-void deleteCurrent(DoubleLinkedList* list) {
+Dllerror deleteCurrent(DoubleLinkedList* list) {
+    Dllerror result = ok; 
     if (list == NULL || list->current == NULL) {
         printf("Error: List is empty or does not exist.\n");
-        return;
+        result= noMemory;
     }
     if (list->current == list->head || list->current == list->tail) {
         printf("Error: Cannot delete head or tail node.\n");
-        return;
+        result = illegalNode;
     }
 
     Node* temp = list->current;
@@ -202,5 +217,6 @@ void deleteCurrent(DoubleLinkedList* list) {
     list->current->next->prev = list->current->prev;
     list->current = list->current->next;
     free(temp);
+    return result;
 }
 
