@@ -32,14 +32,21 @@ static void createDoubleLinkedList(DoubleLinkedList* list) {
             free(list); // Don't forget to free the previously allocated memory
             return;
         }
-
-        list->tail = malloc(sizeof(Node));
-        if (list->tail == NULL) {
-            // Handle memory allocation failure
-            printf("Error: Memory allocation failed.\n");
-            free(list->head); // Don't forget to free the previously allocated memory
-            free(list); // Don't forget to free the previously allocated memory
-            return;
+        else {
+            list->tail = malloc(sizeof(Node));
+            if (list->tail == NULL) {
+                // Handle memory allocation failure
+                printf("Error: Memory allocation failed.\n");
+                free(list->head); // Don't forget to free the previously allocated memory
+                free(list); // Don't forget to free the previously allocated memory
+                return;
+            }
+            else {
+                list->head->next = list->tail;// enure list head points next to list tail
+                list->tail->prev = list->head;// ensure list tail points prev to head
+                list->head->prev = NULL;// ensure list head prev points to null 
+                list->tail->next = NULL;// ensure list tail next points to null
+            }
         }
     }
 }
