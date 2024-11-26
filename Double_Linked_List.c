@@ -78,11 +78,11 @@ Dllerror deleteDoubleLinkedList(DoubleLinkedList* list) {
     // store next pointer in temporary variable next
 	// free current node, free
 	// move to next node
-    Node *current = (list)->head;
-    while (current != (list)->tail) {
-        Node*next = current->next;
-        free(current);
-        current = next;
+    gotoHead(list);
+    while (list->current != (list)->tail) {
+        Node*next = list->current->next;
+        free(list->current);
+        gotoNextNode(list);
     }
     // free tail
     // free list
