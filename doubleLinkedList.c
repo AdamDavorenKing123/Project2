@@ -7,7 +7,7 @@
 * @authors Adam Davoren King, Andrew Reel, Charlie Brady, Ciaran Knowles, Joey Clancy, Ruairi Seery
 * @version 1.0
 */
-/// small edit 
+
 
 #include "doubleLinkedList.h"
 #include "dataTypeOrderedIntSet.h"

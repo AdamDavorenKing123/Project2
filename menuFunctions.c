@@ -17,8 +17,9 @@
  */
 void addElementMenu(orderedIntSet* s) {
 	int ElemToBeAdded;
+	printf("Please enter element (enter value <0 to stop):");
 	scanf_s("%d", &ElemToBeAdded);
-	while (ElemToBeAdded != -1) {
+	while (ElemToBeAdded > 0) {
 		addElement(s, ElemToBeAdded);
 		scanf_s("%d", &ElemToBeAdded);
 	}
