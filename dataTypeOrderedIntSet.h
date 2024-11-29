@@ -5,6 +5,7 @@
 #include <stdlib.h>
 
 typedef enum {
+	CREATED_SET,
 	NUMBER_ADDED, ///< Element added to the set
 	NUMBER_ALREADY_IN_SET, ///< Element already exists in the set
 	NUMBER_REMOVED, ///< Element removed from the set
@@ -21,6 +22,7 @@ typedef struct Node {
 typedef struct orderedIntSet {
 	Node* head;
 	Node* tail;
+	Node* current;
 	int count;
 } orderedIntSet;
 
@@ -32,7 +34,7 @@ typedef struct orderedIntSet {
  * @return   Returns a new empty ordered set
  */
 
-orderedIntSet* createOrderedSet();
+setReturnValue createOrderedSet(orderedIntSet* s);
 
 /**
  * @brief     Delete a set: Deletes an ordered set specified by the user from SetsArray.

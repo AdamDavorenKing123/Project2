@@ -23,11 +23,13 @@
 //Simplified code by creating a function that takes in user input and checks if it is valid, which can be reused throughout the main() function.
 int static getValidIndex() {
 	int index;
+	scanf_s("%d", &index);
 	do {
-		scanf_s("%d", &index);
+	
 		if (index < 0 || index >= 10) {
 			printf("Invalid index - please enter only values 0 - 9\n");
 			printf("Try again\n\n");
+			scanf_s("%d", &index);
 		}
 	} while (index < 0 || index >= 10);
 	return index;
@@ -39,8 +41,17 @@ int main() {
 	int i_1 = 0; ///< Initalising the variable for the index 1 to be zero.
 	int i_2 = 0; ///< Initalising the variable for the index 2 to be zero.
 	int i_3 = 0; ///< Initalising the variable for the index 3 to be zero.
-
-	orderedIntSet* SetsArray[10] = { NULL }; ///< Declaring an array to hold 10 ordered sets.
+	orderedIntSet* ptr0;
+	orderedIntSet* ptr1;
+	orderedIntSet* ptr2;
+	orderedIntSet* ptr3;
+	orderedIntSet* ptr4;
+	orderedIntSet* ptr5;
+	orderedIntSet* ptr6;
+	orderedIntSet* ptr7;
+	orderedIntSet* ptr8;
+	orderedIntSet* ptr9;
+	orderedIntSet* SetsArray[10] = { ptr0, ptr1, ptr2, ptr3, ptr4, ptr5, ptr6, ptr7, ptr8, ptr9 }; ///< Declaring an array to hold 10 ordered sets.
 
 	while (1) {
 		printf("\nChoose from the following:\n");
@@ -65,7 +76,7 @@ int main() {
 		case 1:
 			printf("Please enter index (0 - 9) for set to be created:  \n\n ");
 			index = getValidIndex();
-			SetsArray[index] = createOrderedSet(); ///< Calls the function to create a set
+			createOrderedSet(SetsArray[index]); ///< Calls the function to create a set
 			printf("Set at index %d created \n\n", index);
 			break;
 

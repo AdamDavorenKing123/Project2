@@ -20,9 +20,9 @@
  * @return   Returns a new empty ordered set
  */
 
-orderedIntSet* createOrderedSet() {
-createDoubleLinkedList(); ///< Calling on the double linked list function to create set.
-return list;
+setReturnValue createOrderedSet(orderedIntSet* s) {
+createDoubleLinkedList(s); ///< Calling on the double linked list function to create set.
+return CREATED_SET;
 }
 
 /**
