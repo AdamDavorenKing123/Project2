@@ -51,7 +51,7 @@ int main() {
 	orderedIntSet* ptr7;
 	orderedIntSet* ptr8;
 	orderedIntSet* ptr9;
-	orderedIntSet* SetsArray[10] = { ptr0, ptr1, ptr2, ptr3, ptr4, ptr5, ptr6, ptr7, ptr8, ptr9 }; ///< Declaring an array to hold 10 ordered sets.
+	orderedIntSet* SetArray[10] = { ptr0, ptr1, ptr2, ptr3, ptr4, ptr5, ptr6, ptr7, ptr8, ptr9 }; ///< Declaring an array to hold 10 ordered sets.
 
 	while (1) {
 		printf("\nChoose from the following:\n");
@@ -76,27 +76,27 @@ int main() {
 		case 1:
 			printf("Please enter index (0 - 9) for set to be created:  \n\n ");
 			index = getValidIndex();
-			createOrderedSet(SetsArray[index]); ///< Calls the function to create a set
+			createOrderedSet(SetArray[index]); ///< Calls the function to create a set
 			printf("Set at index %d created \n\n", index);
 			break;
 
 		case 2:
 			printf("Please enter index (0 - 9) for set to be deleted:  \n\n");
 			index = getValidIndex();
-			deleteOrderedSet(index); ///< Calls the function to delete a set.
+			deleteOrderedSet(SetArray[index]); ///< Calls the function to delete a set.
 			printf("Set at index %d deleted \n\n", index);
 			break;
 
 		case 3:
 			printf("Please enter index (0 - 9) for set to add elements to:  \n\n");
-			index = getValidIndex();
-			addElementMenu(index); ///< Calls the relevant menu function to add an element to a set.
+			index= getValidIndex();
+			addElementMenu(SetArray[index]); ///< Calls the relevant menu function to add an element to a set.
 			break;
 
 		case 4:
 			printf("Please enter index (0 - 9) for set to remove elements from: \n\n");
 			index = getValidIndex();
-			removeElementMenu(index); ///< Calls the relevant menu function to remove an element from a set.
+			removeElementMenu(SetArray[index]); ///< Calls the relevant menu function to remove an element from a set.
 			break;
 
 		case 5:

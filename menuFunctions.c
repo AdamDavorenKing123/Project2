@@ -15,8 +15,14 @@
  * @param	 index  This is the index for the set which the element that is to be added is from.
  * @return   N/a (this is a void function)
  */
-void addElementMenu(int index) {
-
+void addElementMenu(orderedIntSet* s) {
+	int ElemToBeAdded;
+	scanf_s("%d", &ElemToBeAdded);
+	while (ElemToBeAdded != -1) {
+		addElement(s, ElemToBeAdded);
+		scanf_s("%d", &ElemToBeAdded);
+	}
+	return;
 }
 
 /**
