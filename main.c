@@ -42,18 +42,19 @@ int main() {
 	int i_1 = 0; ///< Initalising the variable for the index 1 to be zero.
 	int i_2 = 0; ///< Initalising the variable for the index 2 to be zero.
 	int i_3 = 0; ///< Initalising the variable for the index 3 to be zero.
-	orderedIntSet* ptr0;
-	orderedIntSet* ptr1;
-	orderedIntSet* ptr2;
-	orderedIntSet* ptr3;
-	orderedIntSet* ptr4;
-	orderedIntSet* ptr5;
-	orderedIntSet* ptr6;
-	orderedIntSet* ptr7;
-	orderedIntSet* ptr8;
-	orderedIntSet* ptr9;
-	orderedIntSet* SetArray[10] = { ptr0, ptr1, ptr2, ptr3, ptr4, ptr5, ptr6, ptr7, ptr8, ptr9 }; ///< Declaring an array to hold 10 ordered sets.
+	orderedIntSet* SetArray[10]; ///< Declaring an array to hold 10 ordered sets.
 
+	orderedIntSet* ptr0 = &SetArray[0];
+	orderedIntSet* ptr1 = &SetArray[0];
+	orderedIntSet* ptr2 = &SetArray[0];
+	orderedIntSet* ptr3 = &SetArray[0];
+	orderedIntSet* ptr4 = &SetArray[0];
+	orderedIntSet* ptr5 = &SetArray[0];
+	orderedIntSet* ptr6 = &SetArray[0];
+	orderedIntSet* ptr7 = &SetArray[0];
+	orderedIntSet* ptr8 = &SetArray[0];
+	orderedIntSet* ptr9 = &SetArray[0];
+	
 	while (1) {
 		printf("\nChoose from the following:\n");
 		printf("1) Create empty ordered set\n");

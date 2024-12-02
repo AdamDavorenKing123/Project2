@@ -1,5 +1,6 @@
 ﻿///////////////////Double Linked Lists////////////////////////
 #include "doubleLinkedList.h"
+#include "dataTypeOrderedIntSet.h"
 #include <stdlib.h>
 #include <stdio.h>
 //typedef enum {
