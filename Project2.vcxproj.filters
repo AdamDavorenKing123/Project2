@@ -18,7 +18,7 @@
     <ClCompile Include="Menu.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Double_Linked_List.c">
+    <ClCompile Include="doubleLinkedList.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

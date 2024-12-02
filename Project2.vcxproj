@@ -127,7 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Double_Linked_List.c" />
+    <ClCompile Include="doubleLinkedList.c" />
     <ClCompile Include="Menu.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
