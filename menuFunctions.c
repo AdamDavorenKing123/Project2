@@ -15,8 +15,15 @@
  * @param	 index  This is the index for the set which the element that is to be added is from.
  * @return   N/a (this is a void function)
  */
-void addElementMenu(int index) {
-
+void addElementMenu(orderedIntSet* s) {
+	int ElemToBeAdded;
+	printf("Please enter element (enter value <0 to stop):");
+	scanf_s("%d", &ElemToBeAdded);
+	while (ElemToBeAdded > 0) {
+		addElement(s, ElemToBeAdded);
+		scanf_s("%d", &ElemToBeAdded);
+	}
+	return;
 }
 
 /**
@@ -53,6 +60,7 @@ void setIntersectionMenu(int i_1, int i_2, int i_3) {
  */
 
 void setUnionMenu(int i_1, int i_2, int i_3) {
+
 
 }
 

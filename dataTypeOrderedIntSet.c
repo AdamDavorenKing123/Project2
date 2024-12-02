@@ -20,9 +20,9 @@
  * @return   Returns a new empty ordered set
  */
 
-orderedIntSet* createOrderedSet() {
-createDoubleLinkedList(); ///< Calling on the double linked list function to create set.
-return list;
+setReturnValue createOrderedSet(orderedIntSet* s) {
+createDoubleLinkedList(s); ///< Calling on the double linked list function to create set.
+return CREATED_SET;
 }
 
 /**
@@ -33,9 +33,10 @@ return list;
  * @return    N/a (this is a void function)
  */
 
-void deleteOrderedSet(orderedIntSet* s) {
-deleteDoubleLinkedList(); ///< Calling on the double linked list function to delete set.
+setReturnValue deleteOrderedSet(orderedIntSet* s) {
+deleteDoubleLinkedList(s); ///< Calling on the double linked list function to delete set.
 free(s); ///< Freeing the memory allocated to the set.
+return DELETED_SET;
 }
 
 /**
